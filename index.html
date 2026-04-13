@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PolyU Beauty Seven</title>
+<title>七仙女的凡间记忆</title>
 <style>
 /* 全局极简风格 */
 * {
@@ -22,43 +22,46 @@ body {
 
 /* 容器 */
 .container {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 50px auto;
 }
 
 /* 标题 */
 .title {
     text-align: center;
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 600;
     color: #222;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
 }
 
 /* 导航按钮组 */
 .nav {
     display: flex;
     justify-content: center;
-    gap: 12px;
-    margin-bottom: 40px;
+    gap: 16px;
+    margin-bottom: 50px;
     flex-wrap: wrap;
 }
 
 .nav button {
-    padding: 12px 24px;
-    border-radius: 20px;
+    padding: 14px 28px;
+    border-radius: 24px;
     border: none;
     background: white;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .nav button.active {
     background: #4a6cf7;
     color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 108, 247, 0.2);
 }
 
 .nav button:hover {
@@ -66,12 +69,12 @@ body {
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-/* 内容区域 —— 淡入淡出动画 */
+/* 内容区域 —— 非线性渐入渐出动画 */
 .section {
     display: none;
     opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); /* 非线性平滑动画 */
+    transform: translateY(15px);
+    transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .section.show {
@@ -80,45 +83,96 @@ body {
     transform: translateY(0);
 }
 
-/* 人物卡片 */
+/* 人物卡片容器：一行7个，完全按你手绘的布局 */
 .members {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 20px;
+    padding: 0 20px;
 }
 
+/* 单个大卡片：完全还原你画的样式，圆角矩形 */
 .card {
     background: white;
-    border-radius: 20px;
-    padding: 20px;
+    border-radius: 16px;
+    padding: 24px 16px;
     text-align: center;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-    transition: 0.3s;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
-.avatar {
-    width: 70px;
-    height: 70px;
+/* 卡片内元素：完全对应你画的结构 */
+/* 左侧3条线（装饰/信息区） */
+.card .lines {
+    width: 80%;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.card .lines span {
+    height: 3px;
+    background: #e5e7eb;
+    border-radius: 2px;
+}
+
+/* 中间竖条（头像/装饰区） */
+.card .bar {
+    width: 30px;
+    height: 80px;
     background: #eef2ff;
+    border-radius: 4px;
+    margin-bottom: 16px;
+}
+
+/* 右侧圆形（头像位） */
+.card .avatar {
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    margin: 0 auto 12px;
+    background: #eef2ff;
+    margin-bottom: 12px;
 }
 
-.name {
-    font-size: 15px;
+/* 名字 */
+.card .name {
+    font-size: 16px;
     font-weight: 600;
+    color: #333;
 }
 
-/* 内容块样式 */
+/* 内容块样式（聚餐/出行/夜谈） */
 .box {
     background: white;
-    border-radius: 20px;
-    padding: 30px;
+    border-radius: 16px;
+    padding: 40px;
     box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+    min-height: 400px;
+}
+
+/* 响应式适配：小屏幕自动换行 */
+@media (max-width: 992px) {
+    .members {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .members {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 </style>
 </head>
@@ -134,52 +188,124 @@ body {
         <button class="tab-btn" data-target="night">夜谈</button>
     </div>
 
-    <!-- 人物 -->
+    <!-- 人物板块：一行7个大卡片，完全按你手绘的样式 -->
     <div id="people" class="section show">
         <div class="members">
-            <div class="card"><div class="avatar"></div><div class="name">成员 1</div></div>
-            <div class="card"><div class="avatar"></div><div class="name">成员 2</div></div>
-            <div class="card"><div class="avatar"></div><div class="name">成员 3</div></div>
-            <div class="card"><div class="avatar"></div><div class="name">成员 4</div></div>
-            <div class="card"><div class="avatar"></div><div class="name">成员 5</div></div>
-            <div class="card"><div class="avatar"></div><div class="name">成员 6</div></div>
-            <div class="card"><div class="avatar"></div><div class="name">成员 7</div></div>
+            <div class="card">
+                <div class="lines">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="bar"></div>
+                <div class="avatar"></div>
+                <div class="name">成员 1</div>
+            </div>
+            <div class="card">
+                <div class="lines">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="bar"></div>
+                <div class="avatar"></div>
+                <div class="name">成员 2</div>
+            </div>
+            <div class="card">
+                <div class="lines">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="bar"></div>
+                <div class="avatar"></div>
+                <div class="name">成员 3</div>
+            </div>
+            <div class="card">
+                <div class="lines">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="bar"></div>
+                <div class="avatar"></div>
+                <div class="name">成员 4</div>
+            </div>
+            <div class="card">
+                <div class="lines">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="bar"></div>
+                <div class="avatar"></div>
+                <div class="name">成员 5</div>
+            </div>
+            <div class="card">
+                <div class="lines">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="bar"></div>
+                <div class="avatar"></div>
+                <div class="name">成员 6</div>
+            </div>
+            <div class="card">
+                <div class="lines">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="bar"></div>
+                <div class="avatar"></div>
+                <div class="name">成员 7</div>
+            </div>
         </div>
     </div>
 
     <!-- 聚餐 -->
     <div id="food" class="section">
-        <div class="box">这里放聚餐照片、回忆、故事～</div>
+        <div class="box">
+            <h2 style="margin-bottom: 20px; color: #222;">🍽 聚餐回忆</h2>
+            <p style="line-height: 1.8; color: #555;">这里可以放你们一起吃火锅、探店的照片、美食清单、聚餐小故事～</p>
+        </div>
     </div>
 
     <!-- 出行 -->
     <div id="trip" class="section">
-        <div class="box">这里放旅行照片、行程、风景～</div>
+        <div class="box">
+            <h2 style="margin-bottom: 20px; color: #222;">🚗 出行记录</h2>
+            <p style="line-height: 1.8; color: #555;">这里可以放旅行合照、行程攻略、风景照片、旅行vlog链接～</p>
+        </div>
     </div>
 
     <!-- 夜谈 -->
     <div id="night" class="section">
-        <div class="box">这里放夜谈语录、回忆、悄悄话～</div>
+        <div class="box">
+            <h2 style="margin-bottom: 20px; color: #222;">🌙 深夜夜谈</h2>
+            <p style="line-height: 1.8; color: #555;">这里可以放你们的夜谈语录、真心话、未来约定、专属梗～</p>
+        </div>
     </div>
 </div>
 
 <script>
-// 点击切换动画
+// 点击切换非线性渐入渐出动画
 const tabs = document.querySelectorAll('.tab-btn');
 tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-        // 移除所有激活状态
+        // 移除所有按钮激活状态
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
         
-        // 隐藏所有板块
+        // 隐藏所有板块（渐出）
         document.querySelectorAll('.section').forEach(sec => {
             sec.classList.remove('show');
         });
         
-        // 显示目标板块
+        // 延迟显示目标板块（实现丝滑渐入）
         const target = document.getElementById(tab.dataset.target);
-        setTimeout(() => target.classList.add('show'), 50);
+        setTimeout(() => target.classList.add('show'), 80);
     });
 });
 </script>
